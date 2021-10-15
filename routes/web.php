@@ -17,6 +17,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', function () {
+    return "Welcome Home!";
+});
+
+Route::get('/home/{name}', function ($name) {
+    return "Welcome Home $name!";
+});
+
+Route::redirect('/takemehome', '/home', 301);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
