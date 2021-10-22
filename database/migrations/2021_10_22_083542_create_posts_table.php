@@ -15,17 +15,17 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("user_id");
-            $table->string("title");
-            $table->text("content");
-            $table->binary("image")->nullabe();
-            $table->integer("num_likes");
-            $table->integer("num_comments");
-            $table->integer("num_unique_views");
-            $table->dateTime("date_of_creation");
+            $table->bigInteger('user_id')->unsigned();
+            $table->string('title')->default("Empty Title");
+            $table->text('content')->default("Lorem Ipsum");
+            $table->binary('image')->nullable();
+            $table->integer('num_likes')->default(0);
+            $table->integer('num_comments')->default(0)->unsigned();
+            $table->integer('num_unique_views')->default(0)->unsigned();
+            $table->dateTime('date_of_creation');
             $table->timestamps();
 
-            $table->foreign("user_id")->references("id")->on("users")
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
