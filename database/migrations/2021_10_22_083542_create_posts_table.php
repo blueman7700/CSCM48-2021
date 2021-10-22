@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->string('title')->default("Empty Title");
-            $table->text('content')->default("Lorem Ipsum");
+            $table->text('content');
             $table->binary('image')->nullable();
             $table->integer('num_likes')->default(0);
             $table->integer('num_comments')->default(0)->unsigned();
