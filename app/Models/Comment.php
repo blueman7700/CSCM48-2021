@@ -14,4 +14,9 @@ class Comment extends Model
         'num_likes',
         'date_of_creation'
     ];
+
+    public function post()
+    {
+        return $this->belongsTo('App\Post');
+    }
 }

@@ -19,4 +19,9 @@ class Post extends Model
         'num_unique_views',
         'date_of_creation'
     ];
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
 }
