@@ -14,14 +14,16 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-        $u = new User;
-        $u->name = "SuperUser";
-        $u->email = "SuperUser@TestEmail.com";
-        $u->password = "testpassword";
-        $u->date_created = date('Y-m-d H-i-s');
-        $u->image = null;
-        $u->email_verified_at = null;
-        $u->save();
+        // 
+        // $u = new User;
+        // $u->name = "SuperUser";
+        // $u->email = "SuperUser@TestEmail.com";
+        // $u->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'; // password
+        // $u->date_created = date('Y-m-d H-i-s');
+        // $u->image = null;
+        // $u->email_verified_at = null;
+        // $u->save();
+
+        $users = User::factory()->count(10)->create();
     }
 }
