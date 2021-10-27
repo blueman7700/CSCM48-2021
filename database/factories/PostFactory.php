@@ -23,6 +23,13 @@ class PostFactory extends Factory
     {
         return [
             //
+            'user_id' => $this->faker->numberBetween(1, 10),
+            'title' => $this->faker->word(),
+            'content' => $this->faker->sentence(),
+            'image' => null,
+            'num_likes' => $this->faker->numberBetween(0, 10),
+            'num_unique_views' => $this->faker->numberBetween(0, 10),
+            'date_of_creation' => now()
         ];
     }
 }
