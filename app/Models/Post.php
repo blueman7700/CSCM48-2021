@@ -15,7 +15,6 @@ class Post extends Model
         'content',
         'image',
         'num_likes',
-        'num_comments',
         'num_unique_views',
         'date_of_creation'
     ];

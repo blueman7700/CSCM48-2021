@@ -20,7 +20,6 @@ class CreatePostsTable extends Migration
             $table->text('content');
             $table->binary('image')->nullable();
             $table->integer('num_likes')->default(0);
-            $table->integer('num_comments')->default(0)->unsigned();
             $table->integer('num_unique_views')->default(0)->unsigned();
             $table->dateTime('date_of_creation');
             $table->timestamps();
