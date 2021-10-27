@@ -23,6 +23,10 @@ class CommentFactory extends Factory
     {
         return [
             //
+            'reply_id' => $this->faker->numberBetween(1, 10),
+            'content' => $this->faker->word(),
+            'num_likes' => $this->faker->numberBetween(0, 1000),
+            'date_of_creation' => now()
         ];
     }
 }
