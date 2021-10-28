@@ -22,6 +22,6 @@ class CommentTableSeeder extends Seeder
         // $c->date_of_creation = date('Y-m-d H-i-s');
         // $c->save();
 
-        $comments = Comment::factory()->count(10)->create();
+        Comment::factory()->count(10)->create();
     }
 }

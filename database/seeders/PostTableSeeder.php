@@ -25,6 +25,6 @@ class PostTableSeeder extends Seeder
         // $p->date_of_creation = date('Y-m-d H-i-s');
         // $p->save();
 
-        $posts = Post::factory()->count(10)->create();
+        Post::factory()->count(10)->create();
     }
 }
