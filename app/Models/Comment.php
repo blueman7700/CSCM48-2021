@@ -15,8 +15,13 @@ class Comment extends Model
         'date_of_creation'
     ];
 
-    public function post()
+    public function reply()
     {
-        return $this->belongsTo(Post::class);
+        return $this->morphTo();
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'reply');
     }
 }
