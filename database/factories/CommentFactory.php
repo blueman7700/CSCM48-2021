@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CommentFactory extends Factory
@@ -21,10 +22,12 @@ class CommentFactory extends Factory
      */
     public function definition()
     {
+
         return [
             //
-            'reply_id' => $this->faker->numberBetween(1, 10),
-            'content' => $this->faker->word(),
+            'reply_id' => Post::all()->random()->id,
+            'reply_type' => Post::class,
+            'content' => $this->faker->sentence(),
             'num_likes' => $this->faker->numberBetween(0, 1000),
             'date_of_creation' => now()
         ];

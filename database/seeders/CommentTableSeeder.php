@@ -23,5 +23,9 @@ class CommentTableSeeder extends Seeder
         // $c->save();
 
         Comment::factory()->count(10)->create();
+        Comment::factory()->count(10)->create([
+            'reply_id' => Comment::all()->random()->id,
+            'reply_type' => Comment::class,
+        ]);
     }
 }

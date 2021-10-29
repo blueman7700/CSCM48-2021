@@ -20,9 +20,6 @@ class CreateCommentsTable extends Migration
             $table->integer('num_likes')->default(0);
             $table->dateTime('date_of_creation');
             $table->timestamps();
-
-            $table->foreign('reply_id')->references('id')->
-                on('posts')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
