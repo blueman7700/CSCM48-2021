@@ -22,10 +22,14 @@ class CommentTableSeeder extends Seeder
         // $c->date_of_creation = date('Y-m-d H-i-s');
         // $c->save();
 
-        Comment::factory()->count(10)->create();
-        Comment::factory()->count(10)->create([
-            'reply_id' => Comment::all()->random()->id,
-            'reply_type' => Comment::class,
-        ]);
+        $postComments = Comment::factory()->count(5)->create();
+
+        //add 2 comments to each post comment
+        foreach($postComments as $c) {
+            Comment::factory()->count(2)->create([
+                'commentable_id' => $c->id,
+                'commentable_type' => Comment::class,
+            ]);
+        }
     }
 }

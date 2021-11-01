@@ -22,11 +22,10 @@ class CommentFactory extends Factory
      */
     public function definition()
     {
-
         return [
             //
-            'reply_id' => Post::all()->random()->id,
-            'reply_type' => Post::class,
+            'commentable_id' => Post::all()->random()->id,
+            'commentable_type' => Post::class,
             'content' => $this->faker->sentence(),
             'num_likes' => $this->faker->numberBetween(0, 1000),
             'date_of_creation' => now()

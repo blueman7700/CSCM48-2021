@@ -21,7 +21,7 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'reply');
+        return $this->morphMany('App\Models\Comment', 'commentable');
     }
 
     public function user()

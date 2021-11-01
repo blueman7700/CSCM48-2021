@@ -15,7 +15,7 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->morphs('reply');
+            $table->morphs('commentable');
             $table->text('content');
             $table->integer('num_likes')->default(0);
             $table->dateTime('date_of_creation');
