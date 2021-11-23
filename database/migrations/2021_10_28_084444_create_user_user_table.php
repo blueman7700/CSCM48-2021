@@ -36,3 +36,4 @@ class CreateUserUserTable extends Migration
         Schema::dropIfExists('user_user');
     }
 }
+
