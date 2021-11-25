@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,15 +18,29 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+/*
+|   Admin Routes
+*/
+
+Route::get('/users', [UserController::class, 'index']);
+
+/*
+|   Public Routes
+*/
+
+Route::get('/users/register', [UserController::class, 'create']);
+
+Route::post('/users', [UserController::class, 'store']);
+
+Route::get('/{user}/home', [UserController::class, 'show']);
+
+Route::get('/{user}/options', function ($user) {
+    return "whoops, looks like you're early!";
+});
+
 Route::get('/home', function () {
-    return "Welcome Home!";
+    return "Looks like nobody's home :<";
 });
-
-Route::get('/home/{name}', function ($name) {
-    return "Welcome Home $name!";
-});
-
-Route::redirect('/takemehome', '/home', 301);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
