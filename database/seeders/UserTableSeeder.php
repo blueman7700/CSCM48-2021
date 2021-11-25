@@ -16,14 +16,20 @@ class UserTableSeeder extends Seeder
     {
         $users = User::factory()->count(10)->create();
 
+        $num_users = User::all()->count();
+
         foreach($users as $user)
         {
-            $friend = User::find(rand(1, 10));
-            if($user->id != $friend->id) {
-                $user->followers()->attach($friend);
+            $attempts = random_int(0, $num_users);
+            for($i=0; $i<$attempts; $i++) {
+                $friend = User::all()->except($user->id)->random();
+                $exists = $user->Following->contains($friend);
+
+                if(!$exists) {
+                    $user->following()->attach($friend);
+                }
             }
         }
-
     }
 }
 
