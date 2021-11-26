@@ -1,11 +1,11 @@
-@extends('layouts.users')
+@extends('layouts.main')
 
 @section('title')
     Users
 @endsection
 
 @section('content')
-    
+
     <p>Registered users of CoreDump</p>
     <ul>
         @foreach ($users as $user)

@@ -20,14 +20,9 @@ class UserTableSeeder extends Seeder
 
         foreach($users as $user)
         {
-            $attempts = random_int(0, $num_users);
-            for($i=0; $i<$attempts; $i++) {
-                $friend = User::all()->except($user->id)->random();
-                $exists = $user->Following->contains($friend);
-
-                if(!$exists) {
-                    $user->following()->attach($friend);
-                }
+            $friend = User::all()->random();
+            if($friend->id != $user->id) {
+                $user->following()->attach($friend);
             }
         }
     }

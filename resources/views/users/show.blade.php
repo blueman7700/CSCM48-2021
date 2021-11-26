@@ -1,14 +1,15 @@
-@extends('layouts.users')
+@extends('layouts.main')
 
 @section('title')
     User Details
 @endsection
 
 @section('content')
-    
+
     <ul>
         <li>Name: {{$user->name}}</li>
         <li>ID: {{$user->id}}</li>
+        <li>Email: {{$user->email}}</li>
         <li>Posts: {{$user->Posts->count()}}</li>
         <li>Followers: {{$user->Followers->count()}}</li>
         <li>Following: {{$user->Following->count()}}</li>

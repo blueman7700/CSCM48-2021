@@ -1,13 +1,13 @@
-@extends('layouts.users')
+@extends('layouts.main')
 
 @section('title')
     Register New User
 @endsection
 
 @section('content')
-    
+
     <form method="POST" action="{{route('users.store')}}">
-    
+
         @csrf
         <p>Name: <input type="text" name="name"></p>
         <p>Email: <input type="text" name="email"></p>
