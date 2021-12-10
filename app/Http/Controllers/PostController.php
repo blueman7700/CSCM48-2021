@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -14,6 +16,25 @@ class PostController extends Controller
     public function index()
     {
         //
+    }
+
+    public function apiIndex() 
+    {
+        $posts = Post::all();
+        return $posts;
+    }
+
+    public function apiIndexFrom($id)
+    {
+        $user = User::findOrFail($id);
+        $posts = $user->posts;
+        return $posts;
+    }
+
+    public function apiGetOne(int $id)
+    {
+        $post = Post::findOrFail($id);
+        return $post;
     }
 
     /**

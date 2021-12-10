@@ -5,6 +5,10 @@
 @endsection
 
 @section('content')
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
     <ul>
         <li>Name: {{$user->name}}</li>
         <li>ID: {{$user->id}}</li>
@@ -30,4 +34,29 @@
             Logout
         </a>
     </div>
+
+    <div id="root">
+        <ul>
+            <li v-for="post in posts">@{{ post.title }}</li>
+        </ul>
+    </div>
+
+<script>
+    var app = new Vue({
+        el: "#root",
+        data: {
+            posts: [],
+        },
+        mounted(){
+            axios.get("{{route('api.posts.index.from', ['id' => Auth::User()->id])}}")
+                .then(response=>{
+                    this.posts = response.data;
+                })
+                .catch(response=>{
+                    console.log(response);
+            })
+        }
+    });
+</script>
+
 @endsection
