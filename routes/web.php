@@ -15,32 +15,24 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/welcome', 301);
 });
 
-/*
-|   Admin Routes
-*/
+Route::get('/welcome', function () {
+    return view('homepage');
+});
 
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
-
-/*
-|   Public Routes
-*/
 
 Route::get('/users/register', [UserController::class, 'create'])->name('users.create');
 
 Route::post('/users', [UserController::class, 'store'])->name('users.store');
 
-Route::get('/{user}/home', [UserController::class, 'show'])->name('users.show');
+Route::get('/users/home', [UserController::class, 'home'])->middleware(['auth'])->name('users.home');
 
-Route::get('/{user}/options', function ($user) {
-    return "whoops, looks like you're early!";
-});
+Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
 
-Route::get('/home', function () {
-    return "Looks like nobody's home :<";
-});
+Route::get('/logout', '\App\Http\Controllers\Auth\AuthenticatedSessionController@destroy');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
