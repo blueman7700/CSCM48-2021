@@ -15,6 +15,6 @@
 
 <!-- Custom Styles -->
 
-<link rel="stylesheet" href="/public/css/app.css">
+<link rel="stylesheet" href="{{ mix('/css/app.css') }}">
 
 <!-- <link href="/css/album.css" rel="stylesheet"> -->

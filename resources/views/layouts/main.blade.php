@@ -4,9 +4,6 @@
         @include('layouts.partials.head')
     </head>
     <body>
-
-        @include('layouts.partials.header')
-
         @include('layouts.partials.nav')
 
         @if ($errors->any())
