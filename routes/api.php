@@ -24,3 +24,5 @@ Route::get('/posts', [PostController::class, 'apiIndex'])->name('api.posts.index
 Route::get('/posts/user/{id}', [PostController::class, 'apiIndexFrom'])->name('api.posts.index.from');
 
 Route::get('/posts/{id}', [PostController::class, 'apiGetOne'])->name('api.posts.get.one');
+
+Route::get('/posts/{id}/comments', [PostController::class, 'apiGetCommentsFor'])->name('api.posts.comments');

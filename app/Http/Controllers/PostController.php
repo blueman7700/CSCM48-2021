@@ -37,6 +37,12 @@ class PostController extends Controller
         return $post;
     }
 
+    public function apiGetComments(int $id)
+    {
+        $post = Post::findOrFail($id);
+        return $post->comments;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
