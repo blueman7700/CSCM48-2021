@@ -24,10 +24,6 @@ Route::get('/welcome', function () {
 
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
-Route::get('/users/register', [UserController::class, 'create'])->name('users.create');
-
-Route::post('/users', [UserController::class, 'store'])->name('users.store');
-
 Route::get('/users/home', [UserController::class, 'home'])->middleware(['auth'])->name('users.home');
 
 Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');

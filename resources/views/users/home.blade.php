@@ -36,39 +36,69 @@
     </div>
 
     <div id="posts">
-        <div class="container d-flex align-items-center justify-content-center">
+        <div class="container d-flex">
             <div class="col d-felx align-items-center justify-content-center">
-                <post-item v-for="post in posts" v-bind:post="post" v-bind:key="post.id"></post-item>
+                <div class="col-sm-6 mx-auto" v-for="post in posts">
+                    <div class=card>
+                        <div class=card-body>
+                            <h4 class=card-title>@{{post.title}}</h4>
+                            <p class=card-text>@{{post.content}}</p>
+                            <div class=col-sm-8>
+                                <p>likes: @{{post.num_likes}}</p>
+                                <p>comments: @{{n_comments}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+
+        <div class="container d-flex">
+            <ul>
+                <li v-for="p_comment in comments">
+                    @{{p_comment.id}}
+                    <ul>
+                        <li v-for="comment in p_comment.data">
+                            @{{comment.content}}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
 
 <script>
-
-    Vue.component('post-item', {
-        props: ['post'],
-        template: '<div class="col-sm-6 mx-auto"><div class=card><div class=card-body><h4 class=card-title>@{{post.title}}</h4><p class=card-text>@{{post.content}}<div class=row><div class=col-sm-8><p>likes: @{{post.num_likes}}</div></div></div></div></div>'
-    })
-
-
     var app = new Vue({
         el: "#posts",
         data: {
             promises: [],
             posts: [],
+            comments: [],
+            n_comments: 0,
         },
         mounted() {
             axios.get("{{route('api.posts.index.from', ['id' => Auth::User()->id])}}")
                 .then(response=>{
                     this.posts = response.data;
+                    const tmp = response.data;
+                    this.promises = tmp.map(post => {
+                        axios.get("/api/posts/" + post.id + "/comments/")
+                            .then(response=>{
+                                const c = {id: post.id, data: response.data};
+                                this.comments.push(c);})
+                            .catch(response=>{
+                                console.log(response);
+                        })
+                    })
                 })
                 .catch(response=>{
                     console.log(response);
             });
-
+            Promise.all(this.promises).then(data=>{
+                console.log(this.comments);
+            });
         }
     });
-    
 </script>
 
 @endsection

@@ -37,7 +37,7 @@ class PostController extends Controller
         return $post;
     }
 
-    public function apiGetComments(int $id)
+    public function apiGetCommentsFor(int $id)
     {
         $post = Post::findOrFail($id);
         return $post->comments;
