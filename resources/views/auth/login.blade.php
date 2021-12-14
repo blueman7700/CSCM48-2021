@@ -19,29 +19,19 @@
                 <div class="row form-group justify-content-center mb-3">
                     <!-- Email Address -->
                     <div class="col-8">
-                        <label for="email" class="form-label"><b>Email</b></label>
-                        <input type="email" id="email" name="email" class="form-control" required autofocus placeholder="{{old('email')}}" aria-describedby="emailHelp">
-                        <div id="emailHelp" class="form-text">
-                            We'll never share your email with anyone else.
-                        </div>
+                        <x-label for="email" :value="__('Email')"/>
+                        <x-input id="email" type="email" name="email" :value="old('email')" required autofocus/>
                     </div>
                 </div>
-                
 
                 <div class="row form-froup justify-content-center mb-3">
                     <!-- Password -->
                     <div class="col-8">
-                        <label for="password" class="form-label"><b>Password</b></label>
-                        <input type="password" id="password" name="password" class="form-control" required aria-describedby="passHelp">
-                        <div id="passHelp" class="formText">
-                            Your password must be 8-20 characters long, and must contain at least one Number, Uppercase Character, and Symbol. 
-                        </div>
+                        <x-label for="password" :value="__('Password')" />
+                        <x-input id="password" type="password" name="password" required autocomplete="new-password" />
                     </div>
                 </div>
-                
             </div>
-
-            
 
             <!-- Remember Me -->
             <div class="mb-3 form-check">

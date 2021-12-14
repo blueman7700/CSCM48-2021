@@ -12,47 +12,54 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
+            <div class="container my-3">
+                <div class="row form-group justify-content-center mb-3">
+                    <!-- Name -->
+                    <div class="col-8">
+                        <x-label for="name" :value="__('Name')" />
+                        <x-input id="name" type="text" name="name" :value="old('name')" required autofocus />
+                    </div>
+                </div>
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-            </div>
+                <div class="row form-froup justify-content-center mb-3">
+                    <!-- Email Address -->
+                    <div class="col-8">
+                        <x-label for="email" :value="__('Email')" />
+                        <x-input id="email" type="email" name="email" :value="old('email')" required aria-describedby="emailHelp"/>
+                        <div id="emailHelp" class="form-text">
+                            We'll never share your email with anyone else.
+                        </div>
+                    </div>
+                </div>
 
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
+                <div class="row form-froup justify-content-center mb-3">
+                    <!-- Password -->
+                    <div class="col-8">
+                        <x-label for="password" :value="__('Password')" />
+                        <x-input id="password" type="password" name="password" required autocomplete="new-password" aria-describedby="passHelp" />
+                        <div id="passHelp" class="formText">
+                            Your password must be 8-20 characters long, and must contain at least one Number, Uppercase Character, and Symbol. 
+                        </div>
+                    </div>
+                </div>
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
+                <div class="row form-froup justify-content-center mb-3">
+                    <!-- Confirm Password -->
+                    <div class="col-8">
+                        <x-label for="password_confirmation" :value="__('Confirm Password')" />
+                        <x-input id="password_confirmation" type="password" name="password_confirmation" required />
+                    </div>
+                </div>
             </div>
 
             <div class="flex items-center justify-end mt-4">
+                <x-button class="m-4">
+                    {{ __('Register') }}
+                </x-button>
+
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
                     {{ __('Already registered?') }}
                 </a>
-
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
             </div>
         </form>
     </x-auth-card>
