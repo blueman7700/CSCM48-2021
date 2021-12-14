@@ -25,8 +25,8 @@
     </ul>
     <h3>Following</h3>
     <ul>
-        @foreach ($user->Following as $user)
-            <li><a href="/home/{{$user->id}}">{{$user->name}}</a></li>
+        @foreach ($user->Following as $following)
+            <li><a href="/home/{{$following->id}}">{{$following->name}}</a></li>
         @endforeach
     </ul>
     <div class="container d-flex align-items-center justify-content-center">
