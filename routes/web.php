@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,15 @@ Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
 Route::get('/users/home', [UserController::class, 'home'])->middleware(['auth'])->name('users.home');
 
+Route::get('/users/edit', [UserController::class, 'edit'])->middleware(['auth'])->name('users.edit');
+
+Route::post('/users/edit', [userController::class, 'edit.put'])->middleware(['auth']);
+
 Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+
+Route::get('/post/{id}', [PostController::class, 'show'])->name('posts.show');
+
+Route::get('/all', [PostController::class, 'index'])->name('posts.all');
 
 Route::get('/logout', '\App\Http\Controllers\Auth\AuthenticatedSessionController@destroy');
 

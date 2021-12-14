@@ -12,10 +12,16 @@ class Comment extends Model
     protected $fillable = [
         'commentable_id',
         'commentable_type',
+        'user_id',
         'content',
         'num_likes',
         'date_of_creation'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function commentable()
     {

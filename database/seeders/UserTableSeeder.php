@@ -16,8 +16,6 @@ class UserTableSeeder extends Seeder
     {
         $users = User::factory()->count(10)->create();
 
-        $num_users = User::all()->count();
-
         foreach($users as $user)
         {
             $friend = User::all()->random();

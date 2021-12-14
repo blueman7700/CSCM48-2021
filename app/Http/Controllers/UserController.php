@@ -21,6 +21,12 @@ class UserController extends Controller
         return view('users.index', ['users' => $users]);
     }
 
+    public function apiGetOne(int $id)
+    {
+        $u = User::findOrFail($id);
+        return $u;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -80,6 +86,7 @@ class UserController extends Controller
     public function edit($id)
     {
         //
+        return view('users.edit');
     }
 
     /**

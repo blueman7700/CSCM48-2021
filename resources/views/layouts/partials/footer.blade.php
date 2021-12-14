@@ -1,4 +1,4 @@
-<footer class="fixed-bottom footer-light bg-secondary">
+<footer class="footer mt-auto py-3 bg-secondary">
     <div class="container">
       <p class="float-right">
         <a href="#">Back to top</a>

@@ -3,7 +3,7 @@
     <head>
         @include('layouts.partials.head')
     </head>
-    <body>
+    <body class="d-flex flex-column h-100">
         @include('layouts.partials.nav')
 
         @if ($errors->any())
