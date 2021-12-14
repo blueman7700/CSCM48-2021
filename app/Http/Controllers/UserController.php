@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -83,10 +84,29 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
         //
-        return view('users.edit');
+        if(Auth::check()) {
+            return view('users.edit', ['user' => Auth::user()]);
+        } else {
+            return route('login');
+        }
+    }
+
+    public function authUpdatePassword(Request $request) 
+    {
+        $request->validate([
+            'newPassword' => ['required', Password::min(8)->letters()->mixedCase()->numbers()->symbols()],
+            'confirmPassword' => 'required|same:newPassword'
+        ]);
+
+        $id = Auth::User()->id;
+        $u = User::findOrFail($id);
+        $u->password = Hash::make($request->newPassword);
+        $u->save();
+
+        return back();
     }
 
     /**
@@ -96,9 +116,23 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $id = Auth::User()->id;
+        $u = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255'
+        ]);
+
+        $u->name = $request->name;
+        $u->email = $request->email;
+
+        $u->save();
+
+        return back();
     }
 
     /**
@@ -107,8 +141,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
         //
+        $u = Auth::User();
+        $user = User::findOrFail($u->id);
+        $user->delete();
+        return redirect('/logout')->with('message', 'account deleted');
     }
 }

@@ -29,13 +29,17 @@ Route::get('/users/home', [UserController::class, 'home'])->middleware(['auth'])
 
 Route::get('/users/edit', [UserController::class, 'edit'])->middleware(['auth'])->name('users.edit');
 
-Route::post('/users/edit', [userController::class, 'edit.put'])->middleware(['auth']);
+Route::get('/users/stats', [UserController::class, 'stats'])->middleware(['auth'])->name('users.stats');
+
+Route::delete('/users/delete', [UserController::class, 'destroy'])->middleware(['auth'])->name('users.delete');
+
+Route::post('/users/update', [UserController::class, 'update'])->middleware(['auth'])->name('users.update');
 
 Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
 
 Route::get('/post/{id}', [PostController::class, 'show'])->name('posts.show');
 
-Route::get('/all', [PostController::class, 'index'])->name('posts.all');
+Route::get('/all', [PostController::class, 'index'])->middleware(['auth'])->name('posts.index');
 
 Route::get('/logout', '\App\Http\Controllers\Auth\AuthenticatedSessionController@destroy');
 

@@ -4,6 +4,6 @@
         <a href="#">Back to top</a>
       </p>
       <p>Core::Dump &copy; Oliver Morris 2021</p>
-      <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p>
+      <p>Built with Laravel & Bootstrap</p>
     </div>
   </footer>

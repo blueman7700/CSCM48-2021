@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    User Details
+    Post Details
 @endsection
 
 @section('content')
@@ -46,9 +46,6 @@
             </div>
         </div>
     </div>
-
-    
-
 
     <script>
 

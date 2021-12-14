@@ -21,7 +21,7 @@ class PostController extends Controller
 
     public function apiIndex() 
     {
-        $posts = Post::all();
+        $posts = Post::orderBy('date_of_creation', 'desc')->get();
         return $posts;
     }
 
