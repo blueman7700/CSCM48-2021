@@ -22,18 +22,21 @@
     <div>
         <p>Likes: {{$post->num_likes}}</p>
     </div>
-    <div>
-        <h3>Comments:</h4>
-        <form action="POST" action="">
-            <div class="container row text-center justify-content-center">
-                <input type="text" id="comment_text" name="comment_text" class="form-control col-sm-8">
-                <button type="submit" class="btn btn-primary col-sm-1">add</button>
-            </div>
-        </form>
-    </div>
+
     <div id="comments">
+        <h3>Comments:</h4>
+        <div class="container-fluid row text-center justify-content-center">
+        
+            <textarea type="text" id="commentContent" v-model="newCommentContent" class="form-control col-sm-6"></textarea>
+            <button class="btn btn-primary col-sm-1" @click="createComment">add</button>
+        
+            <input type="hidden" id="commentable_id" name="commentable_id" v-model="commentableID" value="{{$post->id}}">
+            <input type="hidden" id="user_id" name="user_id" v-model="userID" value="{{Auth::User()->id}}">
+            <input type="hidden" id="commentable_type" name="commentable_type" v-model="commentableType" value="{{Post::class}}">
+            <input type="hidden" id="user_name" name="user_name" v-model="userName" value="{{Auth::User()->name}}">
+        </div>
         <div class="container-fluid">
-            <div class="col">
+           <div class="col">
                 <div class="card" v-for="comment in comments">
                     <div class="card-body">
                         <a :href="'/users/' + comment.user_id" ><h4 class="card-title">@{{comment.user}}</h4></a>
@@ -44,6 +47,8 @@
         </div>
     </div>
 
+    
+
 
     <script>
 
@@ -51,7 +56,12 @@
             el: "#comments",
             data: {
                 comments: [],
-                promises: []
+                promises: [],
+                newCommentContent: '',
+                commentableID: '{{$post->id}}',
+                commentableType: 'App\\Models\\Post',
+                userID: '{{Auth::User()->id}}',
+                userName: '{{Auth::User()->name}}'
             },
             mounted() {
                 axios.get("{{route('api.posts.comments', ['id' => $post->id])}}").then(response => {
@@ -70,8 +80,24 @@
                 Promise.all(this.promises).then(data=> {
                     console.log(this.comments)
                 });
+            },
+            methods: {
+                createComment:function() {
+                    axios.post("{{route('api.comments.store')}}", {
+                        content: this.newCommentContent, 
+                        commentable_id: this.commentableID,
+                        commentable_type: this.commentableType,
+                        user_id: this.userID
+                    }).then(response=>{
+                        const c = {user_id: this.userID, user: this.userName, text: this.newCommentContent};
+                        this.comments.push(c);
+                        this.newCommentContent = '';
+                    }).catch(response=>{
+                        console.log(response)
+                    })
+                }
             }
-        })
+        });
 
     </script>
 

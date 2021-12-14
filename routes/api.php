@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +30,5 @@ Route::get('/posts/{id}', [PostController::class, 'apiGetOne'])->name('api.posts
 Route::get('/posts/{id}/comments', [PostController::class, 'apiGetCommentsFor'])->name('api.posts.comments');
 
 Route::get('/users/{id}', [UserController::class, 'apiGetOne'])->name('api.users.get');
+
+Route::post('/comments/store', [CommentController::class, 'apiStore'])->name('api.comments.store');
