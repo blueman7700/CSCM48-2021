@@ -38,7 +38,7 @@
                     <div class="row g-0">
                         <div class="col-md-4">
                             @if ($user->image != null)
-                                <img src="{{image->id}}" alt="">
+                                <img src="{{asset('storage/'.$user->image->image)}}" alt="">
                             @else
                                 <img src="{{asset("/default.png")}}" alt="" width="100" height="100" class="border border-dark rounded-circle">
                             @endif

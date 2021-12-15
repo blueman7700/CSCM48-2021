@@ -35,6 +35,8 @@ Route::delete('/users/delete', [UserController::class, 'destroy'])->middleware([
 
 Route::post('/users/update', [UserController::class, 'update'])->middleware(['auth'])->name('users.update');
 
+Route::post('/users/update/image', [UserController::class, 'updateImage'])->middleware(['auth'])->name('users.update.image');
+
 Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
 
 Route::get('/posts/create', [PostController::class, 'create'])->middleware(['auth'])->name('posts.create');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
 use App\Models\User;
+use App\Models\Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -131,6 +132,26 @@ class UserController extends Controller
         $u->email = $request->email;
 
         $u->save();
+
+        return back();
+    }
+
+    public function updateImage(Request $request)
+    {
+        $id = Auth::User()->id;
+        $u = User::find($id);
+
+        $request->validate([
+            'image'=>'required|image|max:1999'
+        ]);
+
+        if($request->hasFile('image')) {
+            $path = $request->file('image')->store('images');
+            $i = new Image;
+            $i->image = $path;
+            $u->image()->save($i);
+            $u->save();
+        }
 
         return back();
     }
