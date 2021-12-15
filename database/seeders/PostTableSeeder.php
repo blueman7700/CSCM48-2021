@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class PostTableSeeder extends Seeder
@@ -14,7 +15,12 @@ class PostTableSeeder extends Seeder
      */
     public function run()
     {
-        Post::factory()->count(10)->create();
+        $posts = Post::factory()->count(10)->create();
+
+        foreach($posts as $post) {
+            $u = User::all()->random();
+            $post->likedUsers()->attach($u->id);
+        }
     }
 }
 

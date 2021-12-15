@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Comment extends Model
 {
@@ -31,6 +32,11 @@ class Comment extends Model
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function likedUsers()
+    {
+        return $this->morphToMany(User::class, 'likeable');
     }
 }
 

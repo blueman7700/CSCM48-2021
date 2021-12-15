@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Post;
+use App\Models\Comment;
 
 class User extends Authenticatable
 {
@@ -55,6 +57,21 @@ class User extends Authenticatable
     public function following()
     {
         return $this->belongsToMany(User::class, null, 'follower_id', 'user_id');
+    }
+
+    public function image()
+    {
+        return $this->MorphOne(Image::class, 'imagable');
+    }
+
+    public function likedPosts()
+    {
+        return $this->morphedByMany(Post::class, 'likeable');
+    }
+
+    public function likedComments()
+    {
+        return $this->morphedByMany(Comment::class, 'likeable');
     }
 }
 

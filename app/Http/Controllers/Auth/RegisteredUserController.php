@@ -46,7 +46,6 @@ class RegisteredUserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->date_created = date('Y-m-d H-i-s');
-        $user->image = null;
         $user->remember_token = Str::random(10);
 
         $user->save();
