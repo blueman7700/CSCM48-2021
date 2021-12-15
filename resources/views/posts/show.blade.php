@@ -10,30 +10,34 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 
     <div>
-        <h1>{{$post->title}}</h2>
+        <h1 class="ms-4">{{$post->title}}</h2>
     </div>
     <div>
-        <p>posted by: {{$post->user->name}} at {{$post->created_at}}</p>
+        <p class="ms-4">posted by: {{$post->user->name}} at {{$post->created_at}}</p>
     </div>
     <!-- check if there is an image -->
     <div>
-        <p>{{$post->content}}</p>
+        <p class="ms-4">{{$post->content}}</p>
     </div>
-    <div>
-        <p>Likes: {{$post->num_likes}}</p>
+    <div id="likes">
+        <input type="text" class="form-control-plaintext ms-4 mb-4" v-model="likesText" value="Likes: {{$post->likedUsers->count()}}">
+        @if ($post->likedUsers->find(Auth::User()->id) != null)
+            <button class="btn btn-success mb-4 ms-4" @click="decLikes">
+                <h4>Liked!</h4>
+            </button>
+        @else
+            <button class="btn btn-primary mb-4 ms-4" @click="incLikes">
+                <h4>Like</h4>
+            </button>
+        @endif
     </div>
 
-    <div id="comments">
+
+    <div id="comments" class="mx-4">
         <h3>Comments:</h4>
         <div class="container-fluid row text-center justify-content-center">
-        
             <textarea type="text" id="commentContent" v-model="newCommentContent" class="form-control col-sm-6"></textarea>
             <button class="btn btn-primary col-sm-1" @click="createComment">add</button>
-        
-            <input type="hidden" id="commentable_id" name="commentable_id" v-model="commentableID" value="{{$post->id}}">
-            <input type="hidden" id="user_id" name="user_id" v-model="userID" value="{{Auth::User()->id}}">
-            <input type="hidden" id="commentable_type" name="commentable_type" v-model="commentableType" value="{{Post::class}}">
-            <input type="hidden" id="user_name" name="user_name" v-model="userName" value="{{Auth::User()->name}}">
         </div>
         <div class="container-fluid">
            <div class="col">
@@ -91,6 +95,55 @@
                         this.newCommentContent = '';
                     }).catch(response=>{
                         console.log(response)
+                    })
+                }
+            }
+        });
+
+        var app2 = new Vue({
+            el: "#likes",
+            data: {
+                likesText: "",
+                promises: [],
+                p_id: '{{$post->id}}',
+                u_id: '{{Auth::User()->id}}'
+            },
+            mounted() {
+                axios.get("{{route('api.posts.likes', ['id' => $post->id])}}").then(response=>{
+                        this.likesText = "Likes: " + response.data;
+                    }).catch(response=>{
+                        console.log(response);
+                    });
+            },
+            methods: {
+                incLikes:function() {
+                    this.promises = [];
+                    axios.post("{{route('api.posts.likes.up')}}", { id: this.p_id, user_id: this.u_id }).then(response=>{
+                        this.promises.push(axios.get("{{route('api.posts.likes', ['id' => $post->id])}}").then(response=>{
+                            this.likesText = "Likes: " + response.data;
+                        }).catch(response=>{
+                            console.log(response);
+                        }));
+                    }).catch(response=>{
+                        console.log(response);
+                    })
+                    Promise.all(this.promises).then(response=>{
+                        console.log(this.likesText);
+                    });
+                },
+                decLikes:function() {
+                    this.promises = [];
+                    axios.post("{{route('api.posts.likes.down')}}", { id: this.p_id, user_id: this.u_id }).then(response=>{
+                        this.promises.push(axios.get("{{route('api.posts.likes', ['id' => $post->id])}}").then(response=>{
+                            this.likesText = "Likes: " + response.data;
+                        }).catch(response=>{
+                            console.log(response);
+                        }));
+                    }).catch(response=>{
+                        console.log(response);
+                    });
+                    Promise.all(this.promises).then(response=>{
+                        console.log(this.likesText);
                     })
                 }
             }

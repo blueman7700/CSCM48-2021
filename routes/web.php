@@ -37,6 +37,12 @@ Route::post('/users/update', [UserController::class, 'update'])->middleware(['au
 
 Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
 
+Route::get('/posts/create', [PostController::class, 'create'])->middleware(['auth'])->name('posts.create');
+
+Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
+
+Route::delete('/posts/delete/{id}', [PostController::class, 'delete'])->middleware(['auth'])->name('posts.delete');
+
 Route::get('/post/{id}', [PostController::class, 'show'])->name('posts.show');
 
 Route::get('/all', [PostController::class, 'index'])->middleware(['auth'])->name('posts.index');
@@ -44,7 +50,7 @@ Route::get('/all', [PostController::class, 'index'])->middleware(['auth'])->name
 Route::get('/logout', '\App\Http\Controllers\Auth\AuthenticatedSessionController@destroy');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect('/users/home', 301);
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';

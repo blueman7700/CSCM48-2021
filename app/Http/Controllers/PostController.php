@@ -44,6 +44,38 @@ class PostController extends Controller
         return $post->comments;
     }
 
+    public function apiIncLikes(Request $request)
+    {
+        $request->validate([
+            'id'=>'required',
+            'user_id'=>'required'
+        ]);
+
+        $p = Post::findOrFail($request->id);
+        $u = User::findOrFail($request->user_id);
+
+        $p->likedUsers()->attach($u->id);
+    }
+
+    public function apiDecLikes(Request $request)
+    {
+        $request->validate([
+            'id'=>'required',
+            'user_id'=>'required'
+        ]);
+
+        $p = Post::findOrFail($request->id);
+        $u = User::findOrFail($request->user_id);
+
+        $p->likedUsers()->wherePivot('user_id', $u->id)->detach();
+    }
+
+    public function apiGetLikes(int $id)
+    {
+        $p = Post::findOrFail($id);
+        return $p->likedUsers->count();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -52,6 +84,7 @@ class PostController extends Controller
     public function create()
     {
         //
+        return view('posts.create');
     }
 
     /**
@@ -63,6 +96,34 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'title'=>'required',
+            'content'=>'required',
+            'user_id'=>'required',
+            'image'=>'image|nullable|max:1999'
+        ]);
+
+        $storename = null;
+
+        if($request->hasFile('image')) {
+            $fullFileName = $request->file('image')->getClientOriginalName();
+            $filename = pathinfo($fullFileName, PATHINFO_FILENAME);
+            $ext = pathinfo($fullFileName, PATHINFO_EXTENSION);
+            $storeName = $filename.'_'.time().'.'.$ext;
+            $request->file('image')->storeAs('public/uploaded', $storeName);
+        }
+
+        $u = User::findOrFail($request->user_id);
+        $p = new Post;
+        $p->title = $request->title;
+        $p->content = $request->content;
+        $p->image = $storename;
+        $p->user_id = $u->id;
+        $p->date_of_creation = now();
+
+        $p->save();
+
+        return route('users.home');
     }
 
     /**
