@@ -13,10 +13,13 @@
         <h1 class="ms-4">{{$post->title}}</h2>
     </div>
     <div>
-        <p class="ms-4">posted by: {{$post->user->name}} at {{$post->created_at}}</p>
+        <p class="ms-4">posted by: <a href="/users/{{$post->user->id}}">{{$post->user->name}}</a> on {{$post->created_at}}</p>
     </div>
-    <!-- check if there is an image -->
-    <div>
+    
+    <div class="container-fluid d-flex ms-2">
+        @if ($post->image != null)
+            <img width="250" height="auto" src="{{asset('storage/'.$post->image->image)}}" alt="">
+        @endif
         <p class="ms-4">{{$post->content}}</p>
     </div>
     <div id="likes">

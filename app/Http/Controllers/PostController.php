@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Image;
 
 class PostController extends Controller
 {
@@ -103,27 +104,23 @@ class PostController extends Controller
             'image'=>'image|nullable|max:1999'
         ]);
 
-        $storename = null;
-
-        if($request->hasFile('image')) {
-            $fullFileName = $request->file('image')->getClientOriginalName();
-            $filename = pathinfo($fullFileName, PATHINFO_FILENAME);
-            $ext = pathinfo($fullFileName, PATHINFO_EXTENSION);
-            $storeName = $filename.'_'.time().'.'.$ext;
-            $request->file('image')->storeAs('public/uploaded', $storeName);
-        }
-
         $u = User::findOrFail($request->user_id);
         $p = new Post;
         $p->title = $request->title;
         $p->content = $request->content;
-        $p->image = $storename;
         $p->user_id = $u->id;
         $p->date_of_creation = now();
-
         $p->save();
 
-        return route('users.home');
+        if($request->hasFile('image')) {
+            $path = $request->file('image')->store('images');
+            $i = new Image;
+            $i->image = $path;
+            $p->image()->save($i);
+            $p->save();
+        }
+
+        return redirect()->route('users.home');
     }
 
     /**

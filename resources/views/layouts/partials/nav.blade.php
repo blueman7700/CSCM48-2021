@@ -6,7 +6,7 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="collapse navbar-collapse col-8" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{route("users.home")}}">
@@ -34,10 +34,16 @@
             </a>
           </li>
         </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-light" type="submit">Search</button>
-        </form>
+        <div class="container-fluid text-center col-1 justify-content-center ms-auto">
+          <a href="/users/home">
+            @if (Auth::User()->image != null)
+              <img src="{{asset('storage/'.Auth::User()->image->image)}}" alt="" width="50" height="50" class="border border-dark rounded-circle mx-3">
+            @else
+              <img src="{{asset("/default.png")}}" alt="" width="50" height="50" class="border border-dark rounded-circle mx-3">
+            @endif
+          </a>
+          <p class="text-end text-white fs-4">{{Auth::User()->name}}</p>
+        </div>
       </div>
     </div>
   </nav>
