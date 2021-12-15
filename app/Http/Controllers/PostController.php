@@ -145,6 +145,8 @@ class PostController extends Controller
     public function edit($id)
     {
         //
+        $post = Post::findOrFail($id);
+        return view('posts.edit', ['post'=>$post]);
     }
 
     /**
@@ -157,6 +159,25 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'title'=>'required',
+            'content'=>'required',
+            'image'=>'image|nullable|max:1999'
+        ]);
+
+        $p = Post::findOrFail($id);
+        $p->title = $request->title;
+        $p->content = $request->content;
+
+        if($request->hasFile('image')) {
+            $path = $request->file('image')->store('images');
+            $i = new Image;
+            $i->image = $path;
+            $p->image()->save($i);
+        }
+
+        $p->save();
+        return redirect()->route('users.home');
     }
 
     /**
@@ -168,5 +189,8 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+        $p = Post::findOrFail($id);
+        $p->delete();
+        return back();
     }
 }
