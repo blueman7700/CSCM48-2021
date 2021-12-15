@@ -9,66 +9,63 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 
-    <ul>
-        <li>Name: {{$user->name}}</li>
-        <li>ID: {{$user->id}}</li>
-        <li>Email: {{$user->email}}</li>
-        <li>Posts: {{$user->Posts->count()}}</li>
-        <li>Followers: {{$user->Followers->count()}}</li>
-        <li>Following: {{$user->Following->count()}}</li>
-    </ul>
-    <h3>Followers</h3>
-    <ul>
-        @foreach ($user->Followers as $follower)
-            <li><a href="/home/{{$follower->id}}">{{$follower->name}}</a></li>
-        @endforeach
-    </ul>
-    <h3>Following</h3>
-    <ul>
-        @foreach ($user->Following as $following)
-            <li><a href="/home/{{$following->id}}">{{$following->name}}</a></li>
-        @endforeach
-    </ul>
-    <div class="container d-flex align-items-center justify-content-center">
-        <a href="/logout" role="button">
-            Logout
-        </a>
-    </div>
-
-    <div id="posts">
-        <div class="container d-flex mb-4">
-            <div class="col d-felx align-items-center justify-content-center">
-                <div class="col-sm-6 mx-auto" v-for="post in posts">
-                    <div class=card>
-                        <a class=card-body :href="'/post/' + post.id">
-                            <h4 class=card-title>@{{post.title}}</h4>
-                            <p class=card-text>@{{post.content}}</p>
-                            <div class="col-sm-8 me-4" >
-                                <p>likes: @{{post.num_likes}}</p>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-8 text-center bg-secondary border border-5 border-dark text-white">
+                <h2 class="my-4"><b>Your Posts</b></h2>
+                <div class="my-4">
+                    <a href="/posts/create" class="text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                          </svg>
+                        Create New Post
+                    </a>
+                </div>
+                <div id="posts">
+                    <div class="container d-flex mb-4">
+                        <div class="col d-felx align-items-center justify-content-center">
+                            <div class="col mx-auto">
+                                @foreach ($user->posts as $post)
+                                <div class="card mb-4 border border-dark border-5">
+                                    <a class=card-body href="/post/{{$post->id}}">
+                                        <h4 class=card-title>{{$post->title}}</h4>
+                                        <p class=card-text>{{$post->content}}</p>
+                                        <div>
+                                            <p>likes: {{$post->likedUsers->count()}}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                @endforeach
                             </div>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="col-4 text-center bg-secondary text-white border border-dark border-5">
+                <h2>People You're Following</h2>
+
+                @foreach ($user->following as $following)
+                    <div class="card">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                @if ($user->image != null)
+                                    <img src="{{image->id}}" alt="">
+                                @else
+                                    <img src="{{asset("/default.png")}}" alt="" width="100" height="100" class="border border-dark rounded-circle">
+                                @endif
+                            </div>
+                            <div class="col-md-8">
+                                <a class="card-body" href="/users/{{$following->id}}">
+                                    <h4 class="card-title text-black"><b>{{$following->name}}</b></h3>
+                                </a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
-
-<script>
-    var app = new Vue({
-        el: "#posts",
-        data: {
-            posts: []
-        },
-        mounted() {
-            axios.get("{{route('api.posts.index.from', ['id' => Auth::User()->id])}}")
-                .then(response=>{
-                    this.posts = response.data;
-                })
-                .catch(response=>{
-                    console.log(response);
-            });
-        }
-    });
-</script>
 
 @endsection
