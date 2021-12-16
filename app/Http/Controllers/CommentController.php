@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use App\Models\User;
+use App\Models\Post;
+use App\Mail\UserNotification;
+use Illuminate\Support\Facades\Mail;
 
 class CommentController extends Controller
 {
@@ -42,6 +46,12 @@ class CommentController extends Controller
             'commentable_id' => 'required|integer',
             'commentable_type' => 'required'
         ]);
+
+        if($request->commentable_type == "App\Models\Post") {
+            $p = Post::findOrFail($request->commentable_id);
+            $u = User::findOrFail($request->user_id);
+            Mail::to($u->email)->send(new UserNotification($p, $u, $request->content));
+        }
 
         $c = new Comment;
         $c->content = $validatedData['content'];
