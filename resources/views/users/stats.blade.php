@@ -22,20 +22,47 @@
         
     @endphp
 
-    <div class="conteiner-fluid justify-content-center text-center">
-        <h2 class="mt-4"><b>Your Statistics</b></h2>
+    <div class="container-fluid justify-content-center text-center">
+        <h1 class="mt-4"><b>Your Statistics</b></h1>
 
-        <p class="mt-4">Total posts: {{$user->posts->count()}}</p>
+        <div class="container-fluid ms-4 me-4">
+            <div class="row mb-4">
+                <div class="col text-center">
+                    <p class="mt-4 fs-3">Total posts: {{$user->posts->count()}}</p>
+                </div>
+                <div class="col text-center">
+                    <p class="mt-4 fs-3">Total comments: {{$user->comments->count()}}</p>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col text-center">
+                    <p class="fs-3">Total posts viewed: {{$user->viewedPosts->count()}}</p>
+                </div>
+                <div class="col text-center">
+                    <p class="fs-3">Total views on your posts: {{$totalViews}}</p>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col text-center">
+                    <p class="fs-3">Total likes: {{$totalLikes}}</p>
+                </div>
+                <div class="col text-center">
+                    <p class="fs-3">Post-to-like ratio: {{$PTLRatio}}</p>
+                </div>
+            </div>
+        </div>
+
+        
     
-        <p>Total comments: {{$user->comments->count()}}</p>
+        
     
-        <p>Total posts viewed: {{$user->viewedPosts->count()}}</p>
+        
     
-        <p>Total likes: {{$totalLikes}}</p>
+        
     
-        <p>Total views on your posts: {{$totalViews}}</p>
+        
     
-        <p>Post-to-like ratio: {{$PTLRatio}}</p>
+        
     </div>
 
 @endsection
