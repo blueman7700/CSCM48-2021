@@ -15,7 +15,6 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('follower_id')->unsigned()->nullable();
             $table->bigInteger('image_id')->unsigned()->nullable();
             $table->string('name');
             $table->string('email')->unique();
@@ -24,9 +23,6 @@ class CreateUsersTable extends Migration
             $table->dateTime('date_created');
             $table->rememberToken();
             $table->timestamps();
-
-            $table->foreign('follower_id')->references('id')->
-                on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->foreign('image_id')->references('id')
                 ->on('images')->onDelete("cascade")->onUpdate('cascade');

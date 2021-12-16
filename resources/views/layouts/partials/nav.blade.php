@@ -36,13 +36,17 @@
         </ul>
         <div class="container-fluid text-center col-1 justify-content-center ms-auto">
           <a href="/users/home">
-            @if (Auth::User()->image != null)
-              <img src="{{asset('storage/'.Auth::User()->image->image)}}" alt="" width="50" height="50" class="border border-dark rounded-circle mx-3">
+            @if (Auth::check())
+              @if (Auth::User()->image != null)
+                <img src="{{asset('storage/'.Auth::User()->image->image)}}" alt="" width="50" height="50" class="border border-dark rounded-circle mx-3">
+              @else
+                <img src="{{asset("/default.png")}}" alt="" width="50" height="50" class="border border-dark rounded-circle mx-3">
+              @endif  
+              <p class="text-end text-white fs-4">{{Auth::User()->name}}</p> 
             @else
-              <img src="{{asset("/default.png")}}" alt="" width="50" height="50" class="border border-dark rounded-circle mx-3">
+              <a href="/login" class="text-white fs-4">Sign-In</a>
             @endif
           </a>
-          <p class="text-end text-white fs-4">{{Auth::User()->name}}</p>
         </div>
       </div>
     </div>

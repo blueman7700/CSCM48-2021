@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Image;
+use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -133,6 +135,15 @@ class PostController extends Controller
     {
         //
         $post = Post::findOrFail($id);
+        if(Auth::check()) {
+            $u = User::findOrFail(Auth::User()->id);
+
+            //try to link user and post, if this fails, it's probably bacause
+            //the user has already seen this post
+            try {
+                $u->viewedPosts()->attach($post->id);
+            } catch (Exception $e) {}            
+        }
         return view('posts.show', ['post' => $post]);
     }
 
