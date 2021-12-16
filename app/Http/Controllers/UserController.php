@@ -29,6 +29,12 @@ class UserController extends Controller
         return $u;
     }
 
+    public function stats() 
+    {
+        $u = User::findOrFail(Auth::User()->id);
+        return view('users.stats', ['user'=>$u]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

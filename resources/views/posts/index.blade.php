@@ -15,17 +15,17 @@
             <div class="col-sm-6 mx-auto" v-for="p in p_data">
                 <a class=card :href="'/post/' + p.post.id">
                     <div class=card-body>
+                        <p>posted: @{{p.post.date_of_creation}} by @{{p.uname}}</p>
                         <h4 class=card-title>@{{p.post.title}}</h4>
                         <p class=card-text>@{{p.post.content}}</p>
                         <div class=row>
-                            <div class="col-sm">
+                            <div class="col ms-2">
                                 <p>likes: @{{p.post.num_likes}}</p>
                             </div>
-                            <div class="col-sm-8">
-                                <p>posted: @{{p.post.date_of_creation}}</p>
+                            <div class="col me-2">
+                                <p>views: @{{p.post.num_unique_views}}</p>
                             </div>
                         </div>
-                        <p>posted by: @{{p.uname}}</p>
                     </div>
                 </a>
             </div>

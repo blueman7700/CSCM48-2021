@@ -25,6 +25,12 @@ class PostController extends Controller
     public function apiIndex() 
     {
         $posts = Post::orderBy('date_of_creation', 'desc')->get();
+
+        foreach($posts as $post) {
+            $post->num_likes = $post->likedUsers->count();
+            $post->num_unique_views = $post->userViews->count();
+        }
+
         return $posts;
     }
 

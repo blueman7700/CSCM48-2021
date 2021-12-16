@@ -42,7 +42,7 @@
               @else
                 <img src="{{asset("/default.png")}}" alt="" width="50" height="50" class="border border-dark rounded-circle mx-3">
               @endif  
-              <p class="text-end text-white fs-4">{{Auth::User()->name}}</p> 
+              <p class="text-center text-white fs-4">{{Auth::User()->name}}</p> 
             @else
               <a href="/login" class="text-white fs-4">Sign-In</a>
             @endif
