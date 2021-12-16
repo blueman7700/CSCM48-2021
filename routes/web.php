@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SocialShareButtonsController;
+use App\Services\SocialMedia;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +17,10 @@ use App\Http\Controllers\PostController;
 |
 */
 
+app()->singleton(SocialMedia::class, function ($app) {
+    return new SocialMedia('key');
+});
+
 Route::get('/', function () {
     return redirect('/welcome', 301);
 });
@@ -22,6 +28,8 @@ Route::get('/', function () {
 Route::get('/welcome', function () {
     return view('homepage');
 });
+
+Route::get('/social-media-share', [SocialShareButtonsController::class, 'ShareWidget']);
 
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 

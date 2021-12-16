@@ -9,6 +9,27 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
+<style>
+    div#social-links {
+        margin: 0 auto;
+        max-width: 500px;
+    }
+    div#social-links ul li {
+        display: inline-block;
+    }          
+    div#social-links ul li a {
+        padding: 20px;
+        border: 1px solid #ccc;
+        margin: 1px;
+        font-size: 30px;
+        color: #222;
+        background-color: #ccc;
+    }
+</style>
+
+
     <div>
         <h1 class="ms-4">{{$post->title}}</h2>
     </div>
@@ -35,6 +56,10 @@
         @endif
     </div>
 
+    <div class="container-fluid">
+        <h3 class="mb-5 text-center">Share This Post</h3>
+        {!! $shareComponent !!}
+    </div>
 
     <div id="comments" class="mx-4">
         <h3>Comments:</h4>

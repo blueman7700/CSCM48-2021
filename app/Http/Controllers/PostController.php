@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Image;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use App\Services\SocialMedia;
 
 class PostController extends Controller
 {
@@ -137,7 +138,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, SocialMedia $t)
     {
         //
         $post = Post::findOrFail($id);
@@ -150,7 +151,10 @@ class PostController extends Controller
                 $u->viewedPosts()->attach($post->id);
             } catch (Exception $e) {}            
         }
-        return view('posts.show', ['post' => $post]);
+
+        $shareComponent = $t->genShareButtons($post->title, $post->content, $post->id);
+
+        return view('posts.show', compact('shareComponent'))->with('post', $post);
     }
 
     /**

@@ -15,7 +15,10 @@
             $totalViews += $post->userViews->count();
         }
 
-        $PTLRatio = $user->posts->count() / $totalLikes
+        if($user->posts->count() > 0) {
+            $PTLRatio = $totalLikes / $user->posts->count();
+        }
+        
         
     @endphp
 
