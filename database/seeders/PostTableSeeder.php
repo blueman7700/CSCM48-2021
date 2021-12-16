@@ -18,8 +18,16 @@ class PostTableSeeder extends Seeder
         $posts = Post::factory()->count(10)->create();
 
         foreach($posts as $post) {
-            $u = User::all()->random();
-            $post->likedUsers()->attach($u->id);
+            //get a random number of users
+            $users = User::all()->random(random_int(0, User::all()->count()));
+            foreach($users as $user) {
+                $post->userViews()->attach($user->id);
+                //50-50 chance that a user will like the post
+                $willLike = (random_int(0,100) % 2) == 0;
+                if($willLike) {
+                    $post->likedUsers()->attach($user->id);
+                }
+            }
         }
     }
 }

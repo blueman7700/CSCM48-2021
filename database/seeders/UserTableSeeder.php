@@ -18,9 +18,11 @@ class UserTableSeeder extends Seeder
 
         foreach($users as $user)
         {
-            $friend = User::all()->random();
-            if($friend->id != $user->id) {
-                $user->following()->attach($friend);
+            $users_to_follow = User::all()->random(random_int(0, User::all()->count()));
+            foreach($users_to_follow as $to_follow) {
+                if($to_follow->id != $user->id) {
+                    $user->following()->attach($to_follow->id);
+                }
             }
         }
     }
